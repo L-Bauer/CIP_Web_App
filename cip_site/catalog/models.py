@@ -26,9 +26,11 @@ class Status(models.Model):
     def __str__(self):
         return self.name
     
-class CIP_Classification(models.Model):
+class cipClassification(models.Model):
     """Model representing the classification of the CIP"""
     name = models.CharField(max_length=100, help_text='Enter a classification for the CIP')
+    
+    code = models.CharField(max_length=1, help_text='Enter the code for the classification (e.g. S for Safety)')
     
     def __str__(self):
         return self.name
@@ -55,7 +57,7 @@ class Associate(models.Model):
     def __str__(self):
         return self.name
     
-class CIP_Idea(models.Model):
+class cipIdea(models.Model):
     # Model representing the CIP entry
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular CIP entry')
     
@@ -68,7 +70,7 @@ class CIP_Idea(models.Model):
     
     status = models.OneToOneField(Status, on_delete=models.CASCADE)
     
-    cip_class = models.ManyToManyField(CIP_Classification)
+    cip_class = models.ManyToManyField(cipClassification)
     
     start_date = models.DateField(null=True, blank=True)
     
