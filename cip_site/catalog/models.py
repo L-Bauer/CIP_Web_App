@@ -44,4 +44,39 @@ class Associate(models.Model):
     """Model representing the associates"""
     emp_id = models.PositiveIntegerField(help_text='Enter the employees ID number')
     
+    name = models.CharField(max_length=30, help_text="Enter in the associate's name")
+    
     shift = models.ForeignKey('Shift', on_delete=models.PROTECT, null=True)
+    
+    dept = models.ForeignKey('Dept', on_delete=models.PROTECT, null=True)
+    
+    def __str__(self):
+        return self.name
+    
+class CIP_Idea(models.Model):
+    # Model representing the CIP entry
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular CIP entry')
+    
+    originator = models.ForeignKey('Associate', on_delete=models.PROTECT, null=True, 
+                                   help_text="Enter associated that created the CIP Idea")
+    
+    entered_date = models.DateField.auto_now_add
+    
+    assets = models.ManyToManyField(Asset)
+    
+    status = models.OneToOneField(Status, on_delete=models.CASCADE)
+    
+    cip_class = models.ManyToManyField(CIP_Classification)
+    
+    start_date = models.DateField(null=True, blank=True)
+    
+    completed_date = models.DateField(null=True, blank=True)
+    
+    eng_support = models.ForeignKey('Associate', on_delete=models.PROTECT, null=True, 
+                                    help_text="Enter associate supporting CIP")
+    
+    annual_savings = models.DecimalField(max_digits=8, decimal_places=2)
+    
+    def __str__(self):
+        return self.name
+    
