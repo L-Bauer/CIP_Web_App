@@ -35,7 +35,7 @@ class cipIdeaAdmin(admin.ModelAdmin):
             'fields': ('status', 'cip_class')
         }),
         ('Dates', {
-            'fields': ('entered_date', 'start_date', 'completed_date')
+            'fields': ('start_date', 'completed_date')
         }),
         ('Other', {
             'fields': ('summary', 'eng_support', 'annual_savings')

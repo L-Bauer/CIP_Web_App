@@ -42,11 +42,11 @@ class Asset(models.Model):
     dept = models.ForeignKey('Dept', on_delete=models.PROTECT, null=True)
     
     def __str__(self):
-        return self.name
+        return self.asset_num
     
 class Associate(models.Model):
     """Model representing the associates"""
-    emp_id = models.PositiveIntegerField(help_text='Enter the employees ID number')
+    emp_id = models.PositiveIntegerField(help_text='Enter the employees ID number', unique=True)
     
     name = models.CharField(max_length=30, help_text="Enter in the associate's name")
     
@@ -76,7 +76,7 @@ class cipIdea(models.Model):
     
     completed_date = models.DateField(null=True, blank=True)
     
-    summary = models.CharField(max_length=1000, help_text="Enter the summary of the CIP idea")
+    summary = models.TextField( help_text="Enter the summary of the CIP idea")
     
     eng_support = models.ManyToManyField(Associate ,related_name='supporter', 
                                     help_text="Enter associate supporting CIP")
@@ -84,7 +84,7 @@ class cipIdea(models.Model):
     annual_savings = models.DecimalField(max_digits=8, decimal_places=2)
     
     def __str__(self):
-        return self.name
+        return self.id
     
     def display_class(self):
         """Create a string for the classification. This is required to display genre in Admin."""
