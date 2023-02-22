@@ -61,12 +61,12 @@ class cipIdea(models.Model):
     # Model representing the CIP entry
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular CIP entry')
     
-    originator = models.ManyToManyField(Associate,related_name='originator', 
+    originator = models.ForeignKey(Associate,related_name='originator', on_delete=models.PROTECT,
                                    help_text="Enter associated that created the CIP Idea")
     
     entered_date = models.DateField(auto_now_add=True)
     
-    assets = models.ManyToManyField(Asset)
+    assets = models.ForeignKey(Asset, on_delete=models.PROTECT, help_text="Enter the asset related to the CIP Idea", null=True)
     
     status = models.OneToOneField(Status, on_delete=models.CASCADE)
     
@@ -78,13 +78,14 @@ class cipIdea(models.Model):
     
     summary = models.TextField( help_text="Enter the summary of the CIP idea")
     
-    eng_support = models.ManyToManyField(Associate ,related_name='supporter', 
+    eng_support = models.ForeignKey(Associate ,related_name='supporter', on_delete=models.PROTECT,
                                     help_text="Enter associate supporting CIP")
     
     annual_savings = models.DecimalField(max_digits=8, decimal_places=2)
     
     def __str__(self):
-        return self.id
+        """String for representing the Model object."""
+        return f'{self.id} ({self.originator.name})'
     
     def display_class(self):
         """Create a string for the classification. This is required to display genre in Admin."""
