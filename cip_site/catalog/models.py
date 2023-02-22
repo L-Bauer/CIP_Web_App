@@ -6,7 +6,7 @@ import uuid
 
 class Shift(models.Model):
     """Model representing a work shift."""
-    name = models.CharField(max_length=15, help_text='Enter a work shift (e.g. 1st Shift)')
+    name = models.CharField(max_length=15, help_text='Enter a work shift (e.g. 1st Shift)', unique=True)
 
     def __str__(self):
         """String for representing the Model object."""
@@ -14,7 +14,7 @@ class Shift(models.Model):
     
 class Dept(models.Model):
     """Model representing a work department"""
-    name = models.CharField(max_length=20, help_text='Enter a work department')
+    name = models.CharField(max_length=20, help_text='Enter a work department', unique=True)
     
     def __str__(self):
         return self.name
@@ -37,7 +37,7 @@ class cipClassification(models.Model):
     
 class Asset(models.Model):
     """Model representing an Asset"""
-    asset_num = models.CharField(max_length=20, help_text='Enter the asset number')
+    asset_num = models.CharField(max_length=20, help_text='Enter the asset number', unique=True)
     
     dept = models.ForeignKey('Dept', on_delete=models.PROTECT, null=True)
     
@@ -76,6 +76,8 @@ class cipIdea(models.Model):
     
     completed_date = models.DateField(null=True, blank=True)
     
+    summary = models.CharField(max_length=1000, help_text="Enter the summary of the CIP idea")
+    
     eng_support = models.ManyToManyField(Associate ,related_name='supporter', 
                                     help_text="Enter associate supporting CIP")
     
@@ -83,6 +85,13 @@ class cipIdea(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def display_class(self):
+        """Create a string for the classification. This is required to display genre in Admin."""
+        return ', '.join(cip_class.name for cip_class in self.cip_class.all()[:3])
+
+    display_class.short_description = 'CIP Class'
+
     
     def get_absolute_url(self):
         """Returns the URL to access a detail record for this CIP."""
