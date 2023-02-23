@@ -10,11 +10,11 @@ def index(request):
     num_cip = cipIdea.objects.all().count()
     total_saving = cipIdea.objects.aggregate(Sum('annual_savings'))
     
-    num_in_process = cipIdea.objects.filter(status__exact=1).count()
+    num_in_process = cipIdea.objects.filter(status__name='In-Process').count()
             
     context = {
         'num_cip': num_cip,
-        'total_saving': total_saving.values(),
+        'total_saving': f"${total_saving['annual_savings__sum']}",
         'num_in_process': num_in_process,
     }
     
