@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>CIP Idea List</h1>
+  {% if cip_list %}
+  <ul>
+    {% for cipIdea in cip_list %}
+      <li>
+        <p>{{ cipIdea.status.name }}, {{cipIdea.summary }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no CIP ideas at the time.</p>
+  {% endif %}
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Sum
+from django.views import generic
 from .models import cipClassification, cipIdea, Asset, Associate, Dept, Status
 
 # Create your views here.
@@ -20,3 +21,9 @@ def index(request):
     
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
+
+class CIPListView(generic.ListView):
+    model = cipIdea
+    
+    context_object_name = 'cip_list'   # your own name for the list as a template variable
+    
