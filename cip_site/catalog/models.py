@@ -4,14 +4,6 @@ import uuid
 
 # Create your models here.
 
-class Shift(models.Model):
-    """Model representing a work shift."""
-    name = models.CharField(max_length=15, help_text='Enter a work shift (e.g. 1st Shift)', unique=True)
-
-    def __str__(self):
-        """String for representing the Model object."""
-        return self.name
-    
 class Dept(models.Model):
     """Model representing a work department"""
     name = models.CharField(max_length=20, help_text='Enter a work department', unique=True)
@@ -19,6 +11,12 @@ class Dept(models.Model):
     def __str__(self):
         return self.name
 
+class Status(models.Model):
+    """Model representing a CIP Status"""
+    name = models.CharField(max_length=20, help_text='Enter a status for CIP', unique=True)
+    
+    def __str__(self):
+        return self.name
     
 class cipClassification(models.Model):
     """Model representing the classification of the CIP"""
@@ -43,13 +41,11 @@ class Associate(models.Model):
     emp_id = models.PositiveIntegerField(help_text='Enter the employees ID number', unique=True)
     
     name = models.CharField(max_length=30, help_text="Enter in the associate's name")
-    
-    shift = models.ForeignKey('Shift', on_delete=models.PROTECT, null=True)
-    
+        
     dept = models.ForeignKey('Dept', on_delete=models.PROTECT, null=True)
     
     class Meta :
-        ordering = ['name', 'dept', 'shift']
+        ordering = ['name', 'dept']
     
     def __str__(self):
         return f' {self.name}, {self.dept.name}'
@@ -64,25 +60,10 @@ class cipIdea(models.Model):
     entered_date = models.DateField(auto_now_add=True)
     
     assets = models.ForeignKey(Asset, on_delete=models.PROTECT, help_text="Enter the asset related to the CIP Idea", null=True)
-    
-    WORK_STATUS = (
-        ('I', 'In-Process'),
-        ('D', 'Deferred'),
-    )
 
-    status = models.CharField(
-        max_length=1,
-        choices=WORK_STATUS,
-        blank=True,
-        default='I',
-        help_text='CIP Status',
-    )
+    status = models.ForeignKey(Status, on_delete=models.PROTECT)
     
     cip_class = models.ManyToManyField(cipClassification)
-    
-    start_date = models.DateField(null=True, blank=True)
-    
-    completed_date = models.DateField(null=True, blank=True)
     
     summary = models.TextField( help_text="Enter the summary of the CIP idea")
     
@@ -92,10 +73,10 @@ class cipIdea(models.Model):
     
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.id} ({self.assets})'
+        return f'{self.originator.name} ({self.assets})'
     
     def display_class(self):
-        """Create a string for the classification. This is required to display genre in Admin."""
+        """Create a string for the classification. This is required to display classes in Admin."""
         return ', '.join(cip_class.name for cip_class in self.cip_class.all()[:3])
 
     display_class.short_description = 'CIP Class'

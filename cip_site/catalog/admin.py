@@ -1,19 +1,19 @@
 from django.contrib import admin
-from .models import Associate, Shift, Dept, cipClassification, cipIdea, Asset
+from .models import Associate, Status, Dept, cipClassification, cipIdea, Asset
 
 # Register your models here.
 # admin.site.register(Associate)
-admin.site.register(Shift)
 admin.site.register(Dept)
 admin.site.register(cipClassification)
+admin.site.register(Status)
 # admin.site.register(cipIdea)
 #admin.site.register(Asset)
 
 # Define the admin class
 @admin.register(Associate)
 class AssociateAdmin(admin.ModelAdmin):
-    list_display = ("emp_id", "name", "shift", "dept")
-    fields = ['emp_id', 'name', ('shift', 'dept')]
+    list_display = ("emp_id", "name", "dept")
+    fields = [('emp_id', 'name'), 'dept']
 
 # Register the Admin classes for Asset using the decorator
 @admin.register(Asset)
@@ -32,9 +32,6 @@ class cipIdeaAdmin(admin.ModelAdmin):
         }),
         ('Status and Classification', {
             'fields': ('status', 'cip_class')
-        }),
-        ('Dates', {
-            'fields': ('start_date', 'completed_date')
         }),
         ('Other', {
             'fields': ('summary', 'eng_support', 'annual_savings')
