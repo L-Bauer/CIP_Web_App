@@ -54,8 +54,12 @@ class Associate(models.Model):
     
     dept = models.ForeignKey('Dept', on_delete=models.PROTECT, null=True)
     
+    class Meta :
+        ordering = ['name', 'dept', 'shift']
+    
     def __str__(self):
-        return self.name
+        return f' {self.name}, {self.dept.name}'
+ 
     
 class cipIdea(models.Model):
     # Model representing the CIP entry
