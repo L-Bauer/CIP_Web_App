@@ -18,13 +18,7 @@ class Dept(models.Model):
     
     def __str__(self):
         return self.name
-    
-class Status(models.Model):
-    """Model representing the working status"""
-    name = models.CharField(max_length=20, help_text='Enter a status for the CIP (e.g. In-Process)')
-    
-    def __str__(self):
-        return self.name
+
     
 class cipClassification(models.Model):
     """Model representing the classification of the CIP"""
@@ -71,7 +65,18 @@ class cipIdea(models.Model):
     
     assets = models.ForeignKey(Asset, on_delete=models.PROTECT, help_text="Enter the asset related to the CIP Idea", null=True)
     
-    status = models.OneToOneField(Status, on_delete=models.CASCADE)
+    WORK_STATUS = (
+        ('I', 'In-Process'),
+        ('D', 'Deferred'),
+    )
+
+    status = models.CharField(
+        max_length=1,
+        choices=WORK_STATUS,
+        blank=True,
+        default='I',
+        help_text='CIP Status',
+    )
     
     cip_class = models.ManyToManyField(cipClassification)
     

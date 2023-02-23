@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>CIP Home</h1>
+  <p>Welcome to CIP, a website developed by <em>Lucas Bauer</em>!</p>
+  <h2>Dynamic content</h2>
+  <p>There CIP has the following records:</p>
+  <ul>
+    <li><strong>Number of CIPs:</strong> {{ num_cip }}</li>
+    <li><strong>Total Cost Savings:</strong> {{ total_saving }}</li>
+    <li><strong>CIP In Procsss:</strong> {{ num_instances_in_process }}</li>
+  </ul>
+{% endblock %}
