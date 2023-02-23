@@ -13,7 +13,8 @@ class Dept(models.Model):
 
 class Status(models.Model):
     """Model representing a CIP Status"""
-    name = models.CharField(max_length=20, help_text='Enter a status for CIP', unique=True)
+    name = models.CharField(max_length=20, help_text='Enter a status for CIP', 
+                            unique=True, default="In-Process")
     
     def __str__(self):
         return self.name
@@ -74,6 +75,9 @@ class cipIdea(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return f'{self.originator.name} ({self.assets})'
+    
+    def is_in_process(self):
+        return self.status == "In-Process"
     
     def display_class(self):
         """Create a string for the classification. This is required to display classes in Admin."""
