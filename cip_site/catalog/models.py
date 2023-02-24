@@ -18,15 +18,7 @@ class Status(models.Model):
     
     def __str__(self):
         return self.name
-    
-class cipClassification(models.Model):
-    """Model representing the classification of the CIP"""
-    name = models.CharField(max_length=100, help_text='Enter a classification for the CIP')
-    
-    code = models.CharField(max_length=1, help_text='Enter the code for the classification (e.g. S for Safety)')
-    
-    def __str__(self):
-        return self.name
+
     
 class Asset(models.Model):
     """Model representing an Asset"""
@@ -64,8 +56,6 @@ class cipIdea(models.Model):
 
     status = models.ForeignKey(Status, on_delete=models.PROTECT)
     
-    cip_class = models.ManyToManyField(cipClassification)
-    
     summary = models.TextField( help_text="Enter the summary of the CIP idea")
     
     eng_support = models.ForeignKey(Associate, on_delete=models.PROTECT, related_name='supporter')
@@ -78,14 +68,7 @@ class cipIdea(models.Model):
     
     def is_in_process(self):
         return self.status == "In-Process"
-    
-    def display_class(self):
-        """Create a string for the classification. This is required to display classes in Admin."""
-        return ', '.join(cip_class.name for cip_class in self.cip_class.all()[:3])
-
-    display_class.short_description = 'CIP Class'
-
-    
+        
     def get_absolute_url(self):
         """Returns the URL to access a detail record for this CIP."""
         return reverse('cip-detail', args=[str(self.id)])

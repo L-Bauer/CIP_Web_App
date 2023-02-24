@@ -1,10 +1,9 @@
 from django.contrib import admin
-from .models import Associate, Status, Dept, cipClassification, cipIdea, Asset
+from .models import Associate, Status, Dept, cipIdea, Asset
 
 # Register your models here.
 # admin.site.register(Associate)
 admin.site.register(Dept)
-admin.site.register(cipClassification)
 admin.site.register(Status)
 # admin.site.register(cipIdea)
 #admin.site.register(Asset)
@@ -24,14 +23,13 @@ class AssetAdmin(admin.ModelAdmin):
 # Register the Admin classes for cip idea using the decorator
 @admin.register(cipIdea)
 class cipIdeaAdmin(admin.ModelAdmin):
-    list_filter = ('status', 'cip_class')
     
     fieldsets = (
         (None, {
             'fields': ('id', 'originator', 'assets')
         }),
-        ('Status and Classification', {
-            'fields': ('status', 'cip_class')
+        ('Status', {
+            'fields': ('status',)
         }),
         ('Other', {
             'fields': ('summary', 'eng_support', 'annual_savings')

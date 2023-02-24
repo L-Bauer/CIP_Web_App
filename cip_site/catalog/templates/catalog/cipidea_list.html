@@ -3,13 +3,24 @@
 {% block content %}
   <h1>CIP Idea List</h1>
   {% if cip_list %}
-  <ul>
+  <table>
+    <tr>
+        <th>Entered Date</th>
+        <th>Orginator</th>
+        <th>Status</th>
+        <th>Asset</th>
+        <th>Annual Savings</th>
+    </tr>
     {% for cipIdea in cip_list %}
-      <li>
-        <p>{{ cipIdea.status.name }}, {{cipIdea.summary }}</p>
-      </li>
+            <tr>
+                <td>{{ cipIdea.entered_date}}</td>
+                <td>{{ cipIdea.originator.name}}</td>
+                <td>{{ cipIdea.status }}</td>
+                <td>{{ cipIdea.assets}}</td>
+                <td>{{ cipIdea.annual_savings}}</td>
+            </tr>
     {% endfor %}
-  </ul>
+    </table>
   {% else %}
     <p>There are no CIP ideas at the time.</p>
   {% endif %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.db.models import Sum
 from django.views import generic
-from .models import cipClassification, cipIdea, Asset, Associate, Dept, Status
+from .models import  cipIdea, Asset, Associate, Dept, Status
 
 # Create your views here.
 def index(request):
