@@ -58,8 +58,11 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
-db.sqlite3
-db.sqlite3-journal
+
+# Not a large database for developing
+# Remove git when out of development
+# db.sqlite3
+# db.sqlite3-journal
 
 # Flask stuff:
 instance/

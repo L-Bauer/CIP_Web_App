@@ -24,7 +24,7 @@ class Asset(models.Model):
     """Model representing an Asset"""
     asset_num = models.CharField(max_length=20, help_text='Enter the asset number', unique=True)
     
-    dept = models.ForeignKey('Dept', on_delete=models.PROTECT, null=True)
+    dept = models.ForeignKey('Dept', on_delete=models.PROTECT, null=True, blank=False)
     
     def __str__(self):
         return self.asset_num

@@ -2,11 +2,8 @@ from django.contrib import admin
 from .models import Associate, Status, Dept, cipIdea, Asset
 
 # Register your models here.
-# admin.site.register(Associate)
 admin.site.register(Dept)
 admin.site.register(Status)
-# admin.site.register(cipIdea)
-#admin.site.register(Asset)
 
 # Define the admin class
 @admin.register(Associate)

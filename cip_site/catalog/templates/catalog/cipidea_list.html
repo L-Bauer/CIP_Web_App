@@ -9,6 +9,7 @@
         <th>Orginator</th>
         <th>Status</th>
         <th>Asset</th>
+        <th>Summary</th>
         <th>Annual Savings</th>
     </tr>
     {% for cipIdea in cip_list %}
@@ -17,6 +18,7 @@
                 <td>{{ cipIdea.originator.name}}</td>
                 <td>{{ cipIdea.status }}</td>
                 <td>{{ cipIdea.assets}}</td>
+                <td>{{ cipIdea.summary }}</td>
                 <td>{{ cipIdea.annual_savings}}</td>
             </tr>
     {% endfor %}
