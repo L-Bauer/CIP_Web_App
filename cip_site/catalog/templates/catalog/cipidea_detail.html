@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    {% if cip_detail %}
+        <h1>CIP ID: {{ cip_detail.id }}</h1>
+
+        <h2>Status: {{ cip_detail.status.get_status_display   }}</h2>
+
+        <p><strong>Originator:</strong> {{ cip_detail.originator.first_name}}, {{ cip_detail.originator.emp_id }}</p> <!-- author detail link not yet defined -->
+        <p><strong>Entered Date:</strong> {{ cip_detail.completed_date }}</p>
+        <p><strong>Summary:</strong> {{ cip_detail.summary }}</p>
+        <p><strong>Assets:</strong> {{ cip_detail.assets.asset_num }}</p>
+        <p><strong>Support:</strong> {{ cip_detail.eng_support.first_name }}</p>
+        <p><strong>Annual Savings:</strong> ${{ cip_detail.annual_savings }}</p>
+    {% else %}
+        <p>There are not details for this CIP.</p>
+    {% endif %}
+
+{% endblock %}

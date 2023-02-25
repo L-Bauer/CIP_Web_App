@@ -8,8 +8,8 @@ admin.site.register(Status)
 # Define the admin class
 @admin.register(Associate)
 class AssociateAdmin(admin.ModelAdmin):
-    list_display = ("emp_id", "name", "dept")
-    fields = [('emp_id', 'name'), 'dept']
+    list_display = ("emp_id", "first_name", "last_name", "dept")
+    fields = ['emp_id', ('first_name', 'last_name'), 'dept']
 
 # Register the Admin classes for Asset using the decorator
 @admin.register(Asset)
@@ -23,7 +23,7 @@ class cipIdeaAdmin(admin.ModelAdmin):
     
     fieldsets = (
         (None, {
-            'fields': ('id', 'originator', 'assets')
+            'fields': ('originator', 'assets')
         }),
         ('Status & Dates', {
             'fields': ('status', 'completed_date')

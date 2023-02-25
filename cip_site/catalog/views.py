@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Sum
+from django.db import models
 from django.views import generic
 from .models import  cipIdea, Asset, Associate, Dept, Status
 
@@ -11,7 +12,7 @@ def index(request):
     num_cip = cipIdea.objects.all().count()
     total_saving = cipIdea.objects.aggregate(Sum('annual_savings'))
     
-    num_in_process = cipIdea.objects.filter(status__name='In-Process').count()
+    num_in_process = cipIdea.objects.filter(status=1).count()
             
     context = {
         'num_cip': num_cip,
@@ -25,5 +26,12 @@ def index(request):
 class CIPListView(generic.ListView):
     model = cipIdea
     
-    context_object_name = 'cip_list'   # your own name for the list as a template variable
     
+    context_object_name = 'cip_list'   # your own name for the list as a template variable
+
+class CIPDetailView(generic.DetailView):
+    model = cipIdea
+    
+    context_object_name = 'cip_detail'
+    
+    template_name = 'catalog/cipidea_detail.html'

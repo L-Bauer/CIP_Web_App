@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-import uuid
 
 # Create your models here.
 
@@ -13,11 +12,22 @@ class Dept(models.Model):
 
 class Status(models.Model):
     """Model representing a CIP Status"""
-    name = models.CharField(max_length=20, help_text='Enter a status for CIP', 
-                            unique=True, default="In-Process")
+    WORK_STATUS = (
+        ('i', 'In-Process'),
+        ('c', 'Completed'),
+        ('d', 'Deferred'),
+    )
+
+    status = models.CharField(
+        max_length=1,
+        choices=WORK_STATUS,
+        blank=False,
+        default='i',
+        help_text='Enter a status for CIP',
+    )
     
     def __str__(self):
-        return self.name
+        return self.status
 
     
 class Asset(models.Model):
@@ -33,21 +43,20 @@ class Associate(models.Model):
     """Model representing the associates"""
     emp_id = models.PositiveIntegerField(help_text='Enter the employees ID number', unique=True)
     
-    name = models.CharField(max_length=30, help_text="Enter in the associate's name")
+    first_name = models.CharField(max_length=30, help_text="Enter in the associate's first name")
+    
+    last_name = models.CharField(max_length=30, help_text="Enter in the associate's last name",
+                                 blank=True, null=True)
         
     dept = models.ForeignKey('Dept', on_delete=models.PROTECT, null=True)
     
-    class Meta :
-        ordering = ['name', 'dept']
     
     def __str__(self):
-        return f' {self.name}, {self.dept.name}'
+        return f' {self.first_name}, {self.dept.name}, {self.emp_id}'
  
     
 class cipIdea(models.Model):
     # Model representing the CIP entry
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular CIP entry')
-    
     originator = models.ForeignKey(Associate, on_delete=models.PROTECT, related_name='originator')
     
     entered_date = models.DateField(auto_now_add=True)
@@ -66,7 +75,7 @@ class cipIdea(models.Model):
     
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.originator.name} ({self.assets})'
+        return f'{self.originator.first_name} ({self.id})'
     
     def is_in_process(self):
         return self.status == "In-Process"

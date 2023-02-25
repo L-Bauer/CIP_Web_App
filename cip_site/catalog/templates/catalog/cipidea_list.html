@@ -5,6 +5,7 @@
   {% if cip_list %}
   <table>
     <tr>
+        <th>CIP Idea ID</th>
         <th>Entered Date</th>
         <th>Orginator</th>
         <th>Status</th>
@@ -15,12 +16,13 @@
     </tr>
     {% for cipIdea in cip_list %}
             <tr>
+                <td><a href="{{ cipIdea.get_absolute_url }}">{{ cipIdea.id }} {{ cipIdea.assets.asset_num }} </a></td>
                 <td>{{ cipIdea.entered_date}}</td>
-                <td>{{ cipIdea.originator.name}}</td>
-                <td>{{ cipIdea.status }}</td>
+                <td>{{ cipIdea.originator.first_name}} {{ cipIdea.originator.last_name}}, {{ cipIdea.originator.emp_id}}</td>
+                <td>{{ cipIdea.status.get_status_display }}</td>
                 <td>{{ cipIdea.assets}}</td>
                 <td>{{ cipIdea.summary }}</td>
-                <td>{{ cipIdea.eng_support.name}}
+                <td>{{ cipIdea.eng_support.first_name}} {{ cipIdea.originator.last_name}}, {{ cipIdea.originator.emp_id }}</td>
                 <td>{{ cipIdea.annual_savings}}</td>
             </tr>
     {% endfor %}
