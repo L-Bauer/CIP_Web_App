@@ -56,6 +56,8 @@ class cipIdea(models.Model):
 
     status = models.ForeignKey(Status, on_delete=models.PROTECT)
     
+    completed_date = models.DateField(blank=True, null=True)
+    
     summary = models.TextField( help_text="Enter the summary of the CIP idea")
     
     eng_support = models.ForeignKey(Associate, on_delete=models.PROTECT, related_name='supporter')

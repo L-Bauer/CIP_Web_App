@@ -25,8 +25,8 @@ class cipIdeaAdmin(admin.ModelAdmin):
         (None, {
             'fields': ('id', 'originator', 'assets')
         }),
-        ('Status', {
-            'fields': ('status',)
+        ('Status & Dates', {
+            'fields': ('status', 'completed_date')
         }),
         ('Other', {
             'fields': ('summary', 'eng_support', 'annual_savings')
